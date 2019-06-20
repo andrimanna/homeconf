@@ -1,0 +1,11 @@
+# amazon-dash.yml
+# ---------------
+settings:
+  delay: 10
+devices:
+  XXMACXX:
+    name: gillette
+    url: 'http://XXXX/db'
+    method: post
+    content-type: plain
+    body: 'true'
