@@ -1,0 +1,3 @@
+@reboot /usr/bin/tvservice -o
+@reboot sleep 45 && echo 0 | tee /sys/class/leds/led1/brightness && echo 0 | tee /sys/class/leds/led0/brightness && llctl f0 && llctl l0
+0 3 * * * echo 0 | tee /sys/class/leds/led1/brightness && echo 0 | tee /sys/class/leds/led0/brightness
