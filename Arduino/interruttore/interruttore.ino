@@ -2,16 +2,20 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266HTTPClient.h>
 #include <SimpleDHT.h>
+#include <EEPROM.h>
 
 #define releila 5   // Pin D1 
 #define releint 4   // Pin D2
 #define pindht22 2  // Pin D4
-#define dist 0.60
+#define dist 0.5
+#define staddr 0
+#define tempaddr sizeof(int)
+
 
 SimpleDHT22 dht22(pindht22);
 
-const char* ssid        = "XXXX";
-const char* password    = "XXXX";
+const char* ssid        = "XXX";
+const char* password    = "XXX";
 unsigned int tempo, tempo0;
 float tcorr = 25.0, ttarg = 25.0, ucorr = 50.0, temp;
 int scorr, starg, acceso = 0, valore = 0;
@@ -25,6 +29,11 @@ void stacor() {
 void staobi() {
   starg = server.arg(0).toInt();
   server.send(200, "text/plain", String(starg));
+  if ( EEPROM.read(staddr) != starg ){
+    EEPROM.write(staddr, starg);
+    delay (500);
+    EEPROM.commit();
+  }
 }
 
 void staobis() {
@@ -41,6 +50,11 @@ void temobi() {
   temp = server.arg(0).toFloat();
   if (temp) ttarg = temp;
   server.send(200, "text/plain", String(ttarg));
+  if ( EEPROM.read(tempaddr) != (int)ttarg ){
+    EEPROM.write(tempaddr, (int)ttarg);
+    delay (500);
+    EEPROM.commit();
+  }
 }
 
 void temobis() {
@@ -52,7 +66,7 @@ void nulla() {
 }
 void umiatt() {
   char rsp[255];
-  sprintf(rsp, "{\"umidita\": %.2f}", ucorr);
+  sprintf(rsp, "{\"umidita\": %.1f}", ucorr);
   server.send(200, "text/plain", rsp);
 }
 
@@ -60,7 +74,7 @@ void interr() {
   if (server.arg(0) == "true") acceso = 1;
   else acceso = 0;
   HTTPClient http;
-  http.begin("http://XXXX/att");
+  http.begin("http://XXX/att");
   int httpCode = http.GET();
   if (httpCode > 0) {
     valore = http.getString().toInt();
@@ -75,12 +89,15 @@ void interr() {
 }
 
 void setup() {
+  EEPROM.begin(sizeof(int)*2);
   pinMode(releila, OUTPUT);
   digitalWrite(releila, HIGH);
   pinMode(releint, OUTPUT);
   digitalWrite(releint, HIGH);
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
+  ttarg = EEPROM.read(tempaddr);
+  starg = EEPROM.read(staddr);
   while (WiFi.status() != WL_CONNECTED) {
     delay(300);
   }
@@ -111,12 +128,12 @@ void loop() {
     switch (starg) {
       case 1:
         if (delta <= -dist) scorr = 1;
-        else if (delta >= -dist && delta <= 0 && scorr == 1) scorr = 1;
+        else if (delta >= -dist && delta < 0 && scorr == 1) scorr = 1;
         else scorr = 0;
         break;
       case 2:
         if (delta >= dist) scorr = 2;
-        else if (delta >= 0 && delta <= dist && scorr == 2) scorr = 2;
+        else if (delta > 0 && delta <= dist && scorr == 2) scorr = 2;
         else scorr = 0;
         break;
       default:
