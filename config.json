@@ -1,299 +1,325 @@
 {
     "bridge": {
         "name": "RaspberryPi",
-        "username": "XXXXXXXX",
-        "port": 51826,
-        "pin": "XXXX",
+        "username": "XXX",
+        "port": 51801,
+        "pin": "XXX",
         "manufacturer": "Mannarella Co",
         "model": "Homebridge",
-        "serialNumber": "XXXX"
+        "serialNumber": "3844"
     },
-    
-    "description": "HomeBridge di XXXX con tante robe carine",
-    
-    "platforms": [{
-        "platform": "Camera-ffmpeg",
-        "cameras": [{
-            "name": "Camera1",
-            "videoConfig": {
-                "source": "-i http://XXXX:8081/",
-                "vcodec": "h264_omx"
-            }
-        }]
-    }, {
-        "platform": "http-doorbell",
-        "port": 9053,
-        "doorbells": [{
-            "name": "Campanello",
-            "id": "ingresso",
-            "duration": 5
-        }]
-    }, {
-        "platform": "Alexa",
-        "name": "Alexa",
-        "username": "XXXX",
-        "password": "XXXX",
-        "pin": "XXXX",
-        "routines": true
-    }],
-    
-    "accessories": [{
-        "accessory": "MotionSensor",
-        "name": "Movimento",
-        "pin": 11
-    }, {
-        "accessory": "HttpAdvancedAccessory",
-        "service": "Thermostat",
-        "name": "Ilaria Condizionata",
-        "optionCharacteristic": ["CurrentRelativeHumidity"],
-        "debug": false,
-        "urls": {
-            "getCurrentHeatingCoolingState": {
-                "url": "http://XXXX/sc"
-            },
-            "getTargetHeatingCoolingState": {
-                "url": "http://XXXX/sos"
-            },
-            "getCurrentTemperature": {
-                "url": "http://XXXX/tc",
-                "mappers": [{
-                    "type": "jpath",
-                    "parameters": {
-                        "jpath": "$.temperatura",
-                        "index": "0"
-                    }
-                }]
-            },
-            "getTargetTemperature": {
-                "url": "http://XXXX/tos"
-            },
-            "getTemperatureDisplayUnits": {
-                "url": "http://XXXX/"
-            },
-            "getCurrentRelativeHumidity": {
-                "url": "http://XXXX/ua",
-                "mappers": [{
-                    "type": "jpath",
-                    "parameters": {
-                        "jpath": "$.umidita",
-                        "index": "0"
-                    }
-                }]
-            },
-            "setTargetHeatingCoolingState": {
-                "url": "http://XXXX/so",
-                "httpMethod": "POST",
-                "body": "{value}"
-            },
-            "setTargetTemperature": {
-                "url": "http://XXXX/to",
-                "httpMethod": "POST",
-                "body": "{value}"
-            },
-            "setTemperatureDisplayUnits": {
-                "url": "http://XXXX/",
-                "httpMethod": "POST",
-                "body": "{value}"
-            }
-        }
-    }, {
-        "accessory": "HttpAdvancedAccessory",
-        "service": "Lightbulb",
-        "name": "Luce",
-        "forceRefreshDelay": 10,
-        "debug": false,
-        "urls": {
-            "getOn": {
-                "url": "http://XXXX/att"
-            },
-            "setOn": {
-                "url": "http://XXXX/on",
-                "httpMethod": "POST",
-                "body": "{value}"
-            }
-        }
-    }, {
-        "accessory": "HttpAdvancedAccessory",
-        "service": "Lightbulb",
-        "name": "Led",
-        "optionCharacteristic": ["Brightness", "Hue", "Saturation"],
-        "debug": false,
-        "urls": {
-            "getOn": {
-                "url": "http://XXXX/ons"
-            },
-            "setOn": {
-                "url": "http://XXXX/on",
-                "httpMethod": "POST",
-                "body": "{value}"
-            },
-            "getBrightness": {
-                "url": "http://XXXX/lums"
-            },
-            "setBrightness": {
-                "url": "http://XXXX/lum",
-                "httpMethod": "POST",
-                "body": "{value}"
-            },
-            "getHue": {
-                "url": "http://XXXX/hues"
-            },
-            "setHue": {
-                "url": "http://XXXX/hue",
-                "httpMethod": "POST",
-                "body": "{value}"
-            },
-            "getSaturation": {
-                "url": "http://XXXX/sats"
-            },
-            "setSaturation": {
-                "url": "http://XXXX/sat",
-                "httpMethod": "POST",
-                "body": "{value}"
-            }
-        }
-    }, {
-        "accessory": "HttpAdvancedAccessory",
-        "service": "Lightbulb",
-        "forceRefreshDelay": 10,
-        "name": "Lampada",
-        "debug": false,
-        "urls": {
-            "getOn": {
-                "url": "http://XXXX/ons"
-            },
-            "setOn": {
-                "url": "http://XXXX/on",
-                "httpMethod": "POST",
-                "body": "{value}"
-            }
-        }
-    }, {
-        "accessory": "HttpAdvancedAccessory",
-        "service": "Fan",
-        "forceRefreshDelay": 10,
-        "name": "Aspiratore",
-        "optionCharacteristic": ["RotationSpeed"],
-        "debug": false,
-        "urls": {
-            "getOn": {
-                "url": "http://XXXX/ons"
-            },
-            "setOn": {
-                "url": "http://XXXX/on",
-                "httpMethod": "POST",
-                "body": "{value}"
-            },
-            "getRotationSpeed": {
-                "url": "http://XXXX/vels"
-            },
-            "setRotationSpeed": {
-                "url": "http://XXXX/vel",
-                "httpMethod": "POST",
-                "body": "{value}"
-            }
-        }
-    }, {
-        "accessory": "HttpAdvancedAccessory",
-        "service": "Switch",
-        "name": "Registra",
-        "debug": false,
-        "urls": {
-            "getOn": {
-                "url": "http://XXXX:8080/0/detection/status",
-                "mappers": [{
-                    "type": "static",
-                    "parameters": {
-                        "mapping": {
-                            "Camera 0 Detection status PAUSE \n": "0",
-                            "Camera 0 Detection status ACTIVE \n": "1"
+    "description": "HomeBridge di AndriManna con tante robe carine",
+    "accessories": [
+        {
+            "accessory": "MotionSensor",
+            "name": "Movimento",
+            "pin": 11
+        },
+        {
+            "accessory": "HttpAdvancedAccessory",
+            "service": "Thermostat",
+            "name": "Ilaria Condizionata",
+            "optionCharacteristic": [
+                "CurrentRelativeHumidity"
+            ],
+            "debug": false,
+            "urls": {
+                "getCurrentHeatingCoolingState": {
+                    "url": "http://XXX/sc"
+                },
+                "getTargetHeatingCoolingState": {
+                    "url": "http://XXX/sos"
+                },
+                "getCurrentTemperature": {
+                    "url": "http://XXX/tc",
+                    "mappers": [
+                        {
+                            "type": "jpath",
+                            "parameters": {
+                                "jpath": "$.temperatura",
+                                "index": "0"
+                            }
                         }
-                    }
-                }]
-            },
-            "setOn": {
-                "url": "http://XXXX:8080/0/detection/{value}",
-                "mappers": [{
-                    "type": "static",
-                    "parameters": {
-                        "mapping": {
-                            "true": "start",
-                            "false": "pause"
+                    ]
+                },
+                "getTargetTemperature": {
+                    "url": "http://XXX/tos"
+                },
+                "getTemperatureDisplayUnits": {
+                    "url": "http://XXX/"
+                },
+                "getCurrentRelativeHumidity": {
+                    "url": "http://XXX/ua",
+                    "mappers": [
+                        {
+                            "type": "jpath",
+                            "parameters": {
+                                "jpath": "$.umidita",
+                                "index": "0"
+                            }
                         }
-                    }
-                }]
+                    ]
+                },
+                "setTargetHeatingCoolingState": {
+                    "url": "http://XXX/so",
+                    "httpMethod": "POST",
+                    "body": "{value}"
+                },
+                "setTargetTemperature": {
+                    "url": "http://XXX/to",
+                    "httpMethod": "POST",
+                    "body": "{value}"
+                },
+                "setTemperatureDisplayUnits": {
+                    "url": "http://XXX/",
+                    "httpMethod": "POST",
+                    "body": "{value}"
+                }
             }
-        }
-    }, {
-        "accessory": "HttpAdvancedAccessory",
-        "service": "Lightbulb",
-        "name": "Luce1",
-        "forceRefreshDelay": 10,
-        "debug": false,
-        "urls": {
-            "getOn": {
-                "url": "http://XXXX/relay/0",
-                "mappers": [{
-                    "type": "jpath",
-                    "parameters": {
-                        "jpath": "$.ison"
-                    }
-                }, {
-                    "type": "static",
-                    "parameters": {
-                        "mapping": {
-                            "true": "1",
-                            "false": "0"
+        },
+        {
+            "accessory": "HttpAdvancedAccessory",
+            "service": "Lightbulb",
+            "name": "Luce",
+            "forceRefreshDelay": 10,
+            "debug": false,
+            "urls": {
+                "getOn": {
+                    "url": "http://XXX/att"
+                },
+                "setOn": {
+                    "url": "http://XXX/on",
+                    "httpMethod": "POST",
+                    "body": "{value}"
+                }
+            }
+        },
+        {
+            "accessory": "HttpAdvancedAccessory",
+            "service": "Lightbulb",
+            "name": "Led",
+            "optionCharacteristic": [
+                "Brightness",
+                "Hue",
+                "Saturation"
+            ],
+            "debug": false,
+            "urls": {
+                "getOn": {
+                    "url": "http://XXX/ons"
+                },
+                "setOn": {
+                    "url": "http://XXX/on",
+                    "httpMethod": "POST",
+                    "body": "{value}"
+                },
+                "getBrightness": {
+                    "url": "http://XXX/lums"
+                },
+                "setBrightness": {
+                    "url": "http://XXX/lum",
+                    "httpMethod": "POST",
+                    "body": "{value}"
+                },
+                "getHue": {
+                    "url": "http://XXX/hues"
+                },
+                "setHue": {
+                    "url": "http://XXX/hue",
+                    "httpMethod": "POST",
+                    "body": "{value}"
+                },
+                "getSaturation": {
+                    "url": "http://XXX/sats"
+                },
+                "setSaturation": {
+                    "url": "http://XXXsat",
+                    "httpMethod": "POST",
+                    "body": "{value}"
+                }
+            }
+        },
+        {
+            "accessory": "HttpAdvancedAccessory",
+            "service": "Lightbulb",
+            "forceRefreshDelay": 10,
+            "name": "Lampada",
+            "debug": false,
+            "urls": {
+                "getOn": {
+                    "url": "http://XXX/ons"
+                },
+                "setOn": {
+                    "url": "http://XXX/on",
+                    "httpMethod": "POST",
+                    "body": "{value}"
+                }
+            }
+        },
+        {
+            "accessory": "HttpAdvancedAccessory",
+            "service": "Fan",
+            "forceRefreshDelay": 10,
+            "name": "Aspiratore",
+            "optionCharacteristic": [
+                "RotationSpeed"
+            ],
+            "debug": false,
+            "urls": {
+                "getOn": {
+                    "url": "http://XXX/ons"
+                },
+                "setOn": {
+                    "url": "http://XXX/on",
+                    "httpMethod": "POST",
+                    "body": "{value}"
+                },
+                "getRotationSpeed": {
+                    "url": "http://XXX/vels"
+                },
+                "setRotationSpeed": {
+                    "url": "http://XXX/vel",
+                    "httpMethod": "POST",
+                    "body": "{value}"
+                }
+            }
+        },
+        {
+            "accessory": "HttpAdvancedAccessory",
+            "service": "Lightbulb",
+            "name": "Luce1",
+            "forceRefreshDelay": 10,
+            "debug": false,
+            "urls": {
+                "getOn": {
+                    "url": "http://XXX/relay/0",
+                    "mappers": [
+                        {
+                            "type": "jpath",
+                            "parameters": {
+                                "jpath": "$.ison"
+                            }
+                        },
+                        {
+                            "type": "static",
+                            "parameters": {
+                                "mapping": {
+                                    "true": "1",
+                                    "false": "0"
+                                }
+                            }
                         }
-                    }
-                }]
-            },
-            "setOn": {
-                "url": "http://XXXX/relay/0",
-                "httpMethod": "POST",
-                "body": "turn={value}",
-                "mappers": [{
-                    "type": "static",
-                    "parameters": {
-                        "mapping": {
-                            "true": "on",
-                            "false": "off"
+                    ]
+                },
+                "setOn": {
+                    "url": "http://XXX/relay/0",
+                    "httpMethod": "POST",
+                    "body": "turn={value}",
+                    "mappers": [
+                        {
+                            "type": "static",
+                            "parameters": {
+                                "mapping": {
+                                    "true": "on",
+                                    "false": "off"
+                                }
+                            }
                         }
+                    ]
+                }
+            }
+        },
+        {
+            "accessory": "HttpAdvancedAccessory",
+            "service": "LockMechanism",
+            "forceRefreshDelay": 10,
+            "name": "Porta",
+            "debug": false,
+            "urls": {
+                "getLockCurrentState": {
+                    "url": "http://XXX/apertos"
+                },
+                "getLockTargetState": {
+                    "url": "http://XXX/apris"
+                },
+                "setLockTargetState": {
+                    "url": "http://XXX/apri",
+                    "httpMethod": "POST",
+                    "body": "{value}"
+                }
+            }
+        },
+        {
+            "accessory": "SPSwitch",
+            "name": "pulsante",
+            "pin": 3
+        },
+        {
+            "accessory": "NetworkDevice",
+            "name": "XXX",
+            "mac": "XXX",
+            "ip": "XXX",
+            "wakeCommand": "ssh XXX@XXX caffeinate -u -t 20",
+            "wakeGraceTime": 15,
+            "shutdownGraceTime": 60,
+            "shutdownCommand": "ssh XXX@XXX pmset sleepnow"
+        }
+    ],
+    "platforms": [
+        {
+            "name": "Config",
+            "port": 8581,
+            "auth": "form",
+            "theme": "dark-mode",
+            "tempUnits": "c",
+            "lang": "auto",
+            "log": {
+                "method": "native",
+                "path": "/var/lib/homebridge/homebridge.log"
+            },
+            "platform": "config",
+            "sudo": true,
+            "sessionTimeout": 28800
+        },
+        {
+            "platform": "http-doorbell",
+            "port": 9053,
+            "doorbells": [
+                {
+                    "name": "Campanello",
+                    "id": "ingresso",
+                    "duration": 5
+                }
+            ]
+        },
+        {
+            "name": "Alexa",
+            "username": "XXX",
+            "password": "XXX",
+            "pin": "XXX",
+            "routines": true,
+            "platform": "Alexa"
+        },
+        {
+            "name": "Camera ffmpeg",
+            "cameras": [
+                {
+                    "name": "Camera",
+                    "videoConfig": {
+                        "source": "-re -i http://XXX:8081/stream",
+                        "maxStreams": 2,
+                        "maxWidth": 1280,
+                        "maxHeight": 720,
+                        "maxFPS": 5,
+                        "maxBitrate": 1024,
+                        "vcodec": "h264_omx",
+                        "packetSize": 188,
+                        "audio": false,
+                        "debug": false
                     }
-                }]
-            }
+                }
+            ],
+            "platform": "Camera-ffmpeg"
         }
-    }, {
-        "accessory": "HttpAdvancedAccessory",
-        "service": "LockMechanism",
-        "forceRefreshDelay": 10,
-        "name": "Porta",
-        "debug": false,
-        "urls": {
-            "getLockCurrentState": {
-                "url": "http://XXXX/apertos"
-            },
-            "getLockTargetState": {
-                "url": "http://XXXX/apris"
-            },
-            "setLockTargetState": {
-                "url": "http://XXXX/apri",
-                "httpMethod": "POST",
-                "body": "{value}"
-            }
-        }
-    }, {
-        "accessory": "SPSwitch",
-        "name": "pulsante",
-        "pin": 3
-    },{
-        "accessory": "NetworkDevice",
-        "name": "XXXX",
-        "mac": "XXXX",
-        "ip": "XXXX",
-        "wakeCommand": "ssh XXXX@XXXX caffeinate -u -t 20",
-        "wakeGraceTime": 15,
-        "shutdownGraceTime": 60,
-        "shutdownCommand": "ssh XXXX@XXXX pmset sleepnow"
-    }]
+    ]
 }
