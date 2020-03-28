@@ -1,3 +1,7 @@
-@reboot /usr/bin/tvservice -o
-@reboot sleep 45 && echo 0 | tee /sys/class/leds/led1/brightness && echo 0 | tee /sys/class/leds/led0/brightness && llctl f0 && llctl l0
-0 3 * * * echo 0 | tee /sys/class/leds/led1/brightness && echo 0 | tee /sys/class/leds/led0/brightness
+@reboot sleep 40 && echo 0 > /sys/class/leds/led1/brightness
+@reboot sleep 50 && echo 0 > /sys/class/leds/led0/brightness
+@reboot sleep 60 && llctl f0
+@reboot sleep 70 && llctl l0
+
+0 3 * * * echo 0 > /sys/class/leds/led1/brightness && echo 0 > /sys/class/leds/led0/brightness
+0 0 * * * find "/home/pi/filmini/Camera di Andrea" -mindepth 1 -mtime +7 -delete >/dev/null 2>&1
